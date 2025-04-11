@@ -1,0 +1,12 @@
+old heli
+852x1500 pixels
+convert MBGB.20000102.gif -gravity South -chop 0x35 +repage -gravity North -chop 0x26 result.gif
+852x1439 pixels
+convert MBGB.20000102.gif -crop 810x1429+4+26 +repage -resize 500x500! result0.gif
+
+new heli
+902x1500 pixels
+convert MBGB.20230105.gif -gravity South -chop 0x44 +repage -gravity North -chop 0x51 result.gif
+902x1405 pixels
+convert MBGB.20230105.gif -crop 867x1405+0+51 +repage -resize 500x500! result1.gif
+
