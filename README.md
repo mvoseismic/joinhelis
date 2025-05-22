@@ -1,5 +1,7 @@
 # joinhelis
 
+## ~/src/joinhelis
+
 Create montages of helicorder plots.
 
 ## joinhelis.pl
