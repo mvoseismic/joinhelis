@@ -26,7 +26,7 @@ if( $staGrp eq '5.2' ) {
     $file_stub = 'MSS1_MBFR_MBLG_MBLY_MBRY';
     $label_stub = '- - - - - - - - MSS1 - - - - - - - - - - - - - - - - MBFR - - - - - - - - - - - - - - - - MBLG - - - - - - - - - - - - - - - - MBLY - - - - - - - - - - - - - - - - MBRY - - - - - - -';
 } elsif( $staGrp eq '12' ) {
-    @sta = qw( MSS1_SHZ MBFR_HHZ MBLG_HHZ MBLY_HHZ MBRY_BHZ MBBY_HHZ MBHA_SHZ MBGH_HHZ MBWH_BHZ MBFL_HHZ MBGB_HHZ MBRV_BHZ);
+    @sta = qw( MSS1_SHZ MBFR_HHZ MBLG_HHZ MBLY_HHZ MBRY_BHZ MBBY_HHZ MBHA_HHZ MBGH_HHZ MBWH_HHZ MBFL_HHZ MBGB_HHZ MBRV_BHZ);
     $file_stub = 'MSS1_MBFR_MBLG_MBLY_MBRY_MBBY_MBHA_MBGH_MBWH_MBFL_MBGB_MBRV';
     $label_stub = '- MSS1 - MBFR - MBLG - MBLY - MBRY - MBBY - MBHA - MBGH - MBWH - MBFL - MBGB - MBRV -';
 } else {
