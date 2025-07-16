@@ -8,6 +8,7 @@
 
 use strict;
 use warnings;
+
 use DateTime;
 use Getopt::Long;
 
@@ -16,6 +17,13 @@ my $dateBeg = "yesterday";
 my $dateEnd = "yesterday";
 
 GetOptions ('stagrp=s' => \$staGrp, 'datebeg=s' => \$dateBeg, 'dateend=s' => \$dateEnd );
+
+
+my $noMagick = 1;
+my $whichMagick = `which magick`;
+if( length(  $whichMagick ) > 0  ){
+    $noMagick = 0;
+}
 
 my @sta;
 my $file_stub;
@@ -37,34 +45,34 @@ if( $staGrp eq '5.2' ) {
 
 # Edit here if you want to do set dates
  
-my $start = DateTime->new(
-    day   => 30,
-    month => 10,
-    year  => 2024,
-);
-my $stop = DateTime->new(
-    day   => 31,
-    month => 10,
-    year  => 2024,
-);
-
-# Uncomment if you want to do yesterday only
-#my $yesterday = DateTime->now->subtract( days => 1 );
-#my $yyesterday = DateTime->now->subtract( days => 2 );
 #my $start = DateTime->new(
-#    day   => $yyesterday->day,
-#    month => $yyesterday->month,
-#    year  => $yyesterday->year,
+#    day   => 30,
+#    month => 10,
+#    year  => 2024,
 #);
 #my $stop = DateTime->new(
-#    day   => $yesterday->day,
-#    month => $yesterday->month,
-#    year  => $yesterday->year,
+#    day   => 31,
+#    month => 10,
+#    year  => 2024,
 #);
 
+# Uncomment if you want to do yesterday only
+my $yesterday = DateTime->now->subtract( days => 1 );
+my $yyesterday = DateTime->now->subtract( days => 2 );
+my $start = DateTime->new(
+    day   => $yyesterday->day,
+    month => $yyesterday->month,
+    year  => $yyesterday->year,
+);
+my $stop = DateTime->new(
+    day   => $yesterday->day,
+    month => $yesterday->month,
+    year  => $yesterday->year,
+);
+
 my $dir_heli = '/mnt/mvofls2/Seismic_Data/monitoring_data/helicorder_plots';
-#my $dir_heli_multi = '/mnt/mvofls2/Seismic_Data/monitoring_data/helicorder_plots_multi';
-my $dir_heli_multi = './helicorder_plots_multi';
+my $dir_heli_multi = '/mnt/mvofls2/Seismic_Data/monitoring_data/helicorder_plots_multi';
+#my $dir_heli_multi = './helicorder_plots_multi';
 
 
 while ( $start->add(days => 1) <= $stop ) {
@@ -77,9 +85,12 @@ while ( $start->add(days => 1) <= $stop ) {
     if( $staGrp eq '12' ) {
         $cmd = "montage";
     } else {
-        #$cmd = "convert -border 20 -bordercolor White +append";
         $cmd = "magick convert -border 20 -bordercolor White +append";
+        if( $noMagick == 1 ) {
+            $cmd =~ s/^magick //;
+        }
     }
+    #print $cmd, "\n";
 
     my $datestr = sprintf( '%4s%02s%02s', $start->year, $start->month, $start->day );
     #printf "%s\n", $datestr;
@@ -121,13 +132,17 @@ while ( $start->add(days => 1) <= $stop ) {
         
     #print $cmd, "\n";
 	system( $cmd );
-    #$cmd = "convert -border 50 -bordercolor White temp.gif -background White -pointsize 72 label:'" . substr( $datestr, 0,4) . "-" . substr( $datestr,4,2) . "-" . substr($datestr,6,2) . " (gains not identical)" . "' +swap -append " .  "temp2.gif";
 	$cmd = "magick convert -border 50 -bordercolor White temp.gif -background White -pointsize 72 label:'" . substr( $datestr, 0,4) . "-" . substr( $datestr,4,2) . "-" . substr($datestr,6,2) . " (gains not identical)" . "' +swap -append " .  "temp2.gif";
-	#print $cmd, "\n";
+    if( $noMagick == 1 ) {
+        $cmd =~ s/^magick //;
+    }
+    #print $cmd, "\n";
 	system( $cmd );
-    #$cmd = "convert -border 50 -bordercolor White temp2.gif -background White -pointsize 72 label:'" . $label_stub . "' -append " .  $file_stub . "." . $datestr . ".gif";
 	$cmd = "magick convert -border 50 -bordercolor White temp2.gif -background White -pointsize 72 label:'" . $label_stub . "' -append " .  $file_stub . "." . $datestr . ".gif";
-	#print $cmd, "\n";
+    if( $noMagick == 1 ) {
+        $cmd =~ s/^magick //;
+    }
+    #print $cmd, "\n";
 	system( $cmd );
 
   	my $fulldir_heli_multi = join( '/', $dir_heli_multi, $subdir_heli );
@@ -137,5 +152,11 @@ while ( $start->add(days => 1) <= $stop ) {
 	#print $cmd, "\n";
     system( $cmd );
 
+}
 
+
+
+sub check_exists_command {
+    my $check = `sh -c 'command -v $_[0]'`;
+    return $check;
 }
