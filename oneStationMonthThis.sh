@@ -1,14 +1,14 @@
 #!/usr/bin/bash
 
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBBY
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBFL
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBFR
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBGB
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBGH
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBHA
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBLG
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBLY
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBRV
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBRY
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MBWH
-/home/seisan/STUFF/src/mvo/joinhelis/oneStationMonth.pl MSS1
+/home/seisan/src/joinhelis/oneStationMonth.pl MBBY
+/home/seisan/src/joinhelis/oneStationMonth.pl MBFL
+/home/seisan/src/joinhelis/oneStationMonth.pl MBFR
+/home/seisan/src/joinhelis/oneStationMonth.pl MBGB
+/home/seisan/src/joinhelis/oneStationMonth.pl MBGH
+/home/seisan/src/joinhelis/oneStationMonth.pl MBHA
+/home/seisan/src/joinhelis/oneStationMonth.pl MBLG
+/home/seisan/src/joinhelis/oneStationMonth.pl MBLY
+/home/seisan/src/joinhelis/oneStationMonth.pl MBRV
+/home/seisan/src/joinhelis/oneStationMonth.pl MBRY
+/home/seisan/src/joinhelis/oneStationMonth.pl MBWH
+/home/seisan/src/joinhelis/oneStationMonth.pl MSS1

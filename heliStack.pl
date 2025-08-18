@@ -58,17 +58,19 @@ while ( $start->add(days => 1) <= $stop ) {
         my $fileHeli1 = sprintf "%s\.%s00\.gif", $scnl, $start->ymd('');
         $fileHeli1 = join( '/', $dirHeli, $start->year, $fileHeli1 );
         my $fileHeli2 = $fileHeli1;
-        $fileHeli2 =~ s/HHZ_MV_00/BHZ_MV_00/;
+        $fileHeli2 =~ s/HHZ_MV_00/HHZ_MV_10/;
         my $fileHeli3 = $fileHeli1;
-        $fileHeli3 =~ s/HHZ_MV_00/BHZ_MV_--/;
+        $fileHeli3 =~ s/HHZ_MV_00/BHZ_MV_00/;
         my $fileHeli4 = $fileHeli1;
-        $fileHeli4 =~ s/HHZ_MV_00/BHZ_MV/;
+        $fileHeli4 =~ s/HHZ_MV_00/BHZ_MV_--/;
         my $fileHeli5 = $fileHeli1;
-        $fileHeli5 =~ s/HHZ_MV_00/SHZ_MV_00/;
+        $fileHeli5 =~ s/HHZ_MV_00/BHZ_MV/;
         my $fileHeli6 = $fileHeli1;
-        $fileHeli6 =~ s/HHZ_MV_00/SHZ_MV_--/;
+        $fileHeli6 =~ s/HHZ_MV_00/SHZ_MV_00/;
         my $fileHeli7 = $fileHeli1;
-        $fileHeli7 =~ s/HHZ_MV_00/SHZ_MV/;
+        $fileHeli7 =~ s/HHZ_MV_00/SHZ_MV_--/;
+        my $fileHeli8 = $fileHeli1;
+        $fileHeli8 =~ s/HHZ_MV_00/SHZ_MV/;
         if( -e $fileHeli1 ) {
             $fileHeli = $fileHeli1;
         } elsif( -e $fileHeli2 ) {
@@ -83,6 +85,8 @@ while ( $start->add(days => 1) <= $stop ) {
             $fileHeli = $fileHeli6;
         } elsif( -e $fileHeli7 ) {
             $fileHeli = $fileHeli7;
+        } elsif( -e $fileHeli8 ) {
+            $fileHeli = $fileHeli8;
         } else {
         }
         my $fileHere = sprintf "%s\.%s\.gif", $sta, $start->ymd('') ;
@@ -97,9 +101,9 @@ while ( $start->add(days => 1) <= $stop ) {
         system( $cmd );
         my ($img_x, $img_y) = imgsize($fileHere);
         if( $img_x == 852 ){
-            $cmd = join( ' ', 'convert', $fileHere, '-crop 810x1429+4+26 +repage -resize 500x500! tmp.gif' );
+            $cmd = join( ' ', 'magick convert', $fileHere, '-crop 810x1429+4+26 +repage -resize 500x500! tmp.gif' );
         } else {
-            $cmd = join( ' ', 'convert', $fileHere, '-crop 867x1405+0+51 +repage -resize 500x500! tmp.gif' );
+            $cmd = join( ' ', 'magick convert', $fileHere, '-crop 867x1405+0+51 +repage -resize 500x500! tmp.gif' );
         }
         system( $cmd );
         $cmd = join( ' ', 'mv tmp.gif', $fileHere );
@@ -124,8 +128,6 @@ while ( $start->add(days => 1) <= $stop ) {
 $cmd = 'magick montage date*.gif -tile 1x -geometry +1+1 dateAll.gif';
 system( $cmd );
 
-open( FH, ">list.txt" );
-print FH "dateAll.gif\n";
 
 for my $sta (@stations){
     my @stafiles = glob( "$sta*.gif" );
@@ -135,16 +137,17 @@ for my $sta (@stations){
         sprintf( '%s.00000000.gif',  $sta ), );
     system( $cmd );
     my $fileMont = sprintf( 'heliStack.%s.%8s-%8s.png', $sta, , $dateBeg, $dateEnd );
-    print FH $fileMont, "\n";
     $cmd = join( '', 'magick montage ', $sta, '*.gif -tile 1x', scalar(@stafiles)+1, ' -geometry +1+1 ', $fileMont );
     system( $cmd );
 
 }
-close( FH );
+
+`magick mogrify -format png dateAll.gif`;
+`mv dateAll.png heliStack.MA.png`;
 
 my $nsta = scalar( @stations );
 my $fileAll = sprintf( 'heliStack.all.%8s-%8s.png', , $dateBeg, $dateEnd );
-$cmd = join( '', 'montage @list.txt -tile ', 
+$cmd = join( '', 'magick montage heliStack.M*.png -tile ', 
 	sprintf( '%d', $nsta+1 ), 
 	'x1 -geometry +20+1 ', $fileAll );
 system( $cmd );
@@ -156,5 +159,4 @@ system( $cmd );
 
 $cmd = 'rm *.gif';
 system( $cmd );
-
-unlink 'list.txt';
+`rm heliStack.MA.png`;

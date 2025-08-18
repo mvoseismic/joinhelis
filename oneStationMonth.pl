@@ -20,6 +20,7 @@ if (not defined $sta) {
     $sta = 'MBLY';
 }
 if (not defined $month) {
+    $dirHeli = '/mnt/earthworm3/monitoring_data/helicorder_plots';
     $month = $now->month;
 }
 if (not defined $year) {
@@ -61,17 +62,19 @@ while ( $start->add(days => 1) < $stop ) {
     my $fileHeli1 = sprintf "%s\.%s00\.gif", $scnl, $start->ymd('');
     $fileHeli1 = join( '/', $dirHeli, $start->year, $fileHeli1 );
     my $fileHeli2 = $fileHeli1;
-    $fileHeli2 =~ s/HHZ_MV_00/BHZ_MV_00/;
+    $fileHeli2 =~ s/HHZ_MV_00/HHZ_MV_10/;
     my $fileHeli3 = $fileHeli1;
-    $fileHeli3 =~ s/HHZ_MV_00/BHZ_MV_--/;
+    $fileHeli3 =~ s/HHZ_MV_00/BHZ_MV_00/;
     my $fileHeli4 = $fileHeli1;
-    $fileHeli4 =~ s/HHZ_MV_00/BHZ_MV/;
+    $fileHeli4 =~ s/HHZ_MV_00/BHZ_MV_--/;
     my $fileHeli5 = $fileHeli1;
-    $fileHeli5 =~ s/HHZ_MV_00/SHZ_MV_00/;
+    $fileHeli5 =~ s/HHZ_MV_00/BHZ_MV/;
     my $fileHeli6 = $fileHeli1;
-    $fileHeli6 =~ s/HHZ_MV_00/SHZ_MV_--/;
+    $fileHeli6 =~ s/HHZ_MV_00/SHZ_MV_00/;
     my $fileHeli7 = $fileHeli1;
-    $fileHeli7 =~ s/HHZ_MV_00/SHZ_MV/;
+    $fileHeli7 =~ s/HHZ_MV_00/SHZ_MV_--/;
+    my $fileHeli8 = $fileHeli1;
+    $fileHeli8 =~ s/HHZ_MV_00/SHZ_MV/;
     if( -e $fileHeli1 ) {
         $fileHeli = $fileHeli1;
     } elsif( -e $fileHeli2 ) {
@@ -86,6 +89,8 @@ while ( $start->add(days => 1) < $stop ) {
         $fileHeli = $fileHeli6;
     } elsif( -e $fileHeli7 ) {
         $fileHeli = $fileHeli7;
+    } elsif( -e $fileHeli8 ) {
+        $fileHeli = $fileHeli8;
     } else {
     }
     if( $fileHeli ne '' ){
@@ -115,7 +120,7 @@ my $size = -s $fileOut;
 if( $size > 50000 ){ 
     $cmd = join( ' ', 'cp', $fileOut, sprintf( '%s/%4d/', $dirHeliMonth, $year ) );
     system( $cmd );
-    $cmd = join( ' ', 'mogrify -resize 100x', $fileOut );
+    $cmd = join( ' ', 'magick mogrify -resize 100x', $fileOut );
     system( $cmd );
     $cmd = join( ' ', 'mv', $fileOut, sprintf( '%s/0-thumbnails/', $dirHeliMonth ) );
     system( $cmd );
