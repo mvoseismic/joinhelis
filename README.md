@@ -15,6 +15,16 @@ Create montages of helicorder plots.
 
 * --stagrp: stations to montage (see code for options).
 
+## joinhelisRT.pl
+
+* Creates three-station multi-plot for "real-time" monitoring
+* Runs as a cronjob on *opsproc3*.
+```
+# create 3-station heli plot
+* * * * * cd /home/seisan/src/joinhelis; ./joinhelisRT.pl >/dev/null 2>&1
+```
+
+
 ## heliStackMonths.pl, heliStack.pl
 
 * Scripts to create multi-day, multi-station montages of helicorders.
