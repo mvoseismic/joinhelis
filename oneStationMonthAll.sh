@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
 #for yr in {2008..2009}
-for yr in {2023..2024}
+for yr in {2025..2025}
 do
-    for mo in {1..12}
+    for mo in {1..7}
     do
         ./oneStationMonth.pl MBBY ${mo} ${yr}
         ./oneStationMonth.pl MBFL ${mo} ${yr}

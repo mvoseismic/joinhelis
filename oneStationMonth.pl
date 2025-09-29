@@ -14,17 +14,23 @@ my $dirHeli = '/mnt/mvofls2/Seismic_Data/monitoring_data/helicorder_plots';
 my $dirHeliMonth = '/mnt/mvofls2/Seismic_Data/monitoring_data/helicorder_plots_station_month';
 my $now = DateTime->today();
 
+my $rtFlag = 0;
+
 my ($sta, $month, $year) = @ARGV;
 
 if (not defined $sta) {
     $sta = 'MBLY';
 }
 if (not defined $month) {
-    $dirHeli = '/mnt/earthworm3/monitoring_data/helicorder_plots';
     $month = $now->month;
+    $rtFlag = 1;
 }
 if (not defined $year) {
     $year= $now->year;
+}
+
+if( $rtFlag == 1 ){
+    $dirHeli = '/mnt/earthworm3/monitoring_data/helicorder_plots';
 }
 
 printf "%4s %02d %04d\n", $sta, $month, $year;
@@ -60,7 +66,11 @@ my $scnl = join( '_', $sta, 'HHZ_MV_00' );
 while ( $start->add(days => 1) < $stop ) {
     my $fileHeli = '';
     my $fileHeli1 = sprintf "%s\.%s00\.gif", $scnl, $start->ymd('');
-    $fileHeli1 = join( '/', $dirHeli, $start->year, $fileHeli1 );
+    if( $rtFlag == 0 ){
+        $fileHeli1 = join( '/', $dirHeli, $start->year, $fileHeli1 );
+    } else {
+        $fileHeli1 = join( '/', $dirHeli, $fileHeli1 );
+    }
     my $fileHeli2 = $fileHeli1;
     $fileHeli2 =~ s/HHZ_MV_00/HHZ_MV_10/;
     my $fileHeli3 = $fileHeli1;
@@ -145,7 +155,11 @@ $scnl = join( '_', $sta, 'HDF_MV_00' );
 while ( $start->add(days => 1) < $stop ) {
     my $fileHeli = '';
     my $fileHeli1 = sprintf "%s\.%s00\.gif", $scnl, $start->ymd('');
-    $fileHeli1 = join( '/', $dirHeli, $start->year, $fileHeli1 );
+    if( $rtFlag == 0 ){
+        $fileHeli1 = join( '/', $dirHeli, $start->year, $fileHeli1 );
+    } else {
+        $fileHeli1 = join( '/', $dirHeli, $fileHeli1 );
+    }
     my $fileHeli2 = $fileHeli1;
     $fileHeli2 =~ s/HDF_MV_00/HDF_MV/;
     if( -e $fileHeli1 ) {
