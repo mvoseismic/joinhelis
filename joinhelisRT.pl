@@ -70,7 +70,8 @@ if( $noMagick == 1 ) {
     $cmd =~ s/^magick //;
 }
 system( $cmd );
-$cmd = "magick convert -border 5 -bordercolor White temp2.gif -background White -font Open-Sans -pointsize 54 label:'" . $label_stub . "' -append " .  "helix.png";
+my $file_here = "xhelis.png";
+$cmd = "magick convert -border 5 -bordercolor White temp2.gif -background White -font Open-Sans -pointsize 54 label:'" . $label_stub . "' -append " .  $file_here;
 if( $noMagick == 1 ) {
     $cmd =~ s/^magick //;
 }
@@ -78,7 +79,8 @@ system( $cmd );
 
 system( 'rm temp*.gif' );
 
-my $file_here = "helix.png";
+./joinHelisRTdormant.sh
+
 my $file_there = join( '/', $dir_heli_multi, $file_here );
 $cmd = join( ' ', 'mv', $file_here, $file_there );
 system( $cmd );
