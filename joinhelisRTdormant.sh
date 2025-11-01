@@ -8,7 +8,6 @@ ftp -n -v $HOST << EOT
 ascii
 user $USER $PASSWD
 prompt
-cd heliwatch
 put xhelis.png
 bye
 EOT

@@ -79,7 +79,7 @@ system( $cmd );
 
 system( 'rm temp*.gif' );
 
-./joinHelisRTdormant.sh
+system( './joinhelisRTdormant.sh' );
 
 my $file_there = join( '/', $dir_heli_multi, $file_here );
 $cmd = join( ' ', 'mv', $file_here, $file_there );
